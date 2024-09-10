@@ -1,16 +1,16 @@
 /*
-Danny's Diner business data analysis
+BKHouse business data analysis
 Skills used: Basic Aggregations, Windows Function, Sub-query, Common Table Expression (CTE), Joins, etc. was used to solve the business questions.
 */
 
 -- Sales table
-SELECT * FROM dannys_diner.sales;
+SELECT * FROM BKHouse.sales;
 
 -- Menu table
-SELECT * FROM dannys_diner.menu;
+SELECT * FROM BKHouse.menu;
 
 -- Members table
-SELECT * FROM dannys_diner.members;
+SELECT * FROM BKHouse.members;
 
 -- Business Questions Solved:
 
@@ -18,8 +18,8 @@ SELECT * FROM dannys_diner.members;
 
 SELECT sales.customer_id,
 	   SUM(menu.price) as total_amount_spent
-FROM dannys_diner.sales as sales
-JOIN dannys_diner.menu as menu
+FROM BKHouse.sales as sales
+JOIN BKHouse.menu as menu
 ON sales.product_id = menu.product_id
 GROUP BY 1
 ORDER BY 1;
@@ -32,7 +32,7 @@ C			      36
 
 -- Q2. How many days has each customer visited the restaurant?
 SELECT sales.customer_id, COUNT(*)
-FROM dannys_diner.sales as sales
+FROM BKHouse.sales as sales
 GROUP BY 1
 ORDER BY 1
 
@@ -50,8 +50,8 @@ WITH item_no AS (
   		 sales.product_id product_id, 
   		 menu.product_name product_name,
   		 ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.order_date) item_num
-  FROM dannys_diner.sales AS sales
-  INNER JOIN dannys_diner.menu AS menu
+  FROM BKHouse.sales AS sales
+  INNER JOIN BKHouse.menu AS menu
   ON sales.product_id = menu.product_id
 )
 
@@ -70,8 +70,8 @@ C			      ramen
 SELECT sales.product_id, 
 	   menu.product_name, 
        COUNT(*) AS item_count
-FROM dannys_diner.sales AS sales
-INNER JOIN dannys_diner.menu AS menu
+FROM BKHouse.sales AS sales
+INNER JOIN BKHouse.menu AS menu
 ON sales.product_id = menu.product_id
 GROUP BY 1, 2
 ORDER BY 3 DESC
@@ -90,8 +90,8 @@ WITH items AS (
  		 menu.product_name product_name, 
  		 COUNT(*) purchase_count,
    		 RANK() OVER (PARTITION BY sales.customer_id ORDER BY COUNT(*) DESC) item_no
- FROM dannys_diner.sales AS sales
- INNER JOIN dannys_diner.menu AS menu
+ FROM BKHouse.sales AS sales
+ INNER JOIN BKHouse.menu AS menu
  ON sales.product_id = menu.product_id
  GROUP BY 1, 2, 3
 )
@@ -117,8 +117,8 @@ WITH orders AS (
   		 sales.order_date order_date, 
   		 sales.product_id product_id,
 		 ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.order_date) row_no
-FROM dannys_diner.sales sales
-INNER JOIN dannys_diner.members members
+FROM BKHouse.sales sales
+INNER JOIN BKHouse.members members
 ON sales.customer_id = members.customer_id and sales.order_date > members.join_date
 )
 
@@ -141,8 +141,8 @@ WITH orders AS (
   		 sales.order_date order_date, 
   		 sales.product_id product_id,
 		 ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.order_date DESC, sales.product_id DESC) row_no
-FROM dannys_diner.sales sales
-INNER JOIN dannys_diner.members members
+FROM BKHouse.sales sales
+INNER JOIN BKHouse.members members
 ON sales.customer_id = members.customer_id and sales.order_date < members.join_date
 )
 
@@ -162,10 +162,10 @@ B			      2021-01-04	1
 SELECT sales.customer_id customer_id, 
   	   COUNT(*) total_items,
 	   SUM(menu.price) amount_spent	 
-FROM dannys_diner.sales sales
-INNER JOIN dannys_diner.menu menu
+FROM BKHouse.sales sales
+INNER JOIN BKHouse.menu menu
 ON sales.product_id = menu.product_id
-INNER JOIN dannys_diner.members members
+INNER JOIN BKHouse.members members
 ON sales.customer_id = members.customer_id and sales.order_date < members.join_date
 GROUP BY 1
 ORDER BY 1;
@@ -182,8 +182,8 @@ SELECT sales.customer_id,
            CASE WHEN menu.product_name = 'sushi' THEN 2
            ELSE 1
            END * 10) total_points
-FROM dannys_diner.sales sales
-INNER JOIN dannys_diner.menu menu
+FROM BKHouse.sales sales
+INNER JOIN BKHouse.menu menu
 ON sales.product_id = menu.product_id
 GROUP BY 1
 ORDER BY 1;
@@ -198,10 +198,10 @@ C	          360
   
 SELECT sales.customer_id,
   	   SUM(menu.price * 2) total_points 
-FROM dannys_diner.sales sales
-INNER JOIN dannys_diner.menu menu
+FROM BKHouse.sales sales
+INNER JOIN BKHouse.menu menu
 ON sales.product_id = menu.product_id
-INNER JOIN dannys_diner.members members
+INNER JOIN BKHouse.members members
 ON members.customer_id = sales.customer_id
 WHERE sales.order_date >= members.join_date AND sales.order_date <= '2021-01-31'
 GROUP BY 1
@@ -218,8 +218,8 @@ B	          44
 CREATE VIEW customers_total_spent AS
 SELECT sales.customer_id,
 	   SUM(menu.price) as total_amount_spent
-FROM dannys_diner.sales as sales
-JOIN dannys_diner.menu as menu
+FROM BKHouse.sales as sales
+JOIN BKHouse.menu as menu
 ON sales.product_id = menu.product_id
 GROUP BY 1
 ORDER BY 1;
