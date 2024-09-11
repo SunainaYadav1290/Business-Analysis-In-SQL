@@ -1,4 +1,5 @@
-# Business Analysis In SQL : Varun's BrickHouse Restaurant Case Study by Sunaina Yadav
+# Business Analysis In SQL : 
+BrickHouse Restaurant Case Study by Sunaina Yadav
 ## Introduction
 This is an SQL project. BrickHouse is a restaurant business that sell continental food and who want to use his business data to help make data-driven decisions for the business.
 
