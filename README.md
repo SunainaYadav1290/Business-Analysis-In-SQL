@@ -35,6 +35,5 @@ SQL Functions: Basic Aggregations, Windows Function, Common Table Expression, Jo
 ## Summary of Findings<br/>
 1.The customer A has the highest spending amount of $76.<br/>
 2.The most purchased item is ramen. It was purchased 8 times.<br/>
-3.Customer B has three items with same no of purchased.<br/>
-4.Customer A and B spent $25 and $40 respectively before they became a member.<br/>
-5.Customer C was never a member but purchased items of $35.<br/>
+3.Customer A and B spent $25 and $40 respectively before they became a member.<br/>
+4.Customer C was never a member but purchased items of $35.<br/>
